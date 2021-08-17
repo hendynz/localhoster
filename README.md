@@ -22,14 +22,7 @@ In `/etc/resolver/docker.test`:
 
 `sudo killall -HUP mDNSResponder`
 
-`mkdir certs`
-
-In `.env`:
-
-```
-    DOCKER_NAME=localhoster
-    DOCKER_BASE_URL=localhoster.docker.test
-```
+`mv .env.example .env`
 
 `mkcert -install`
 `mkcert -key-file ./certs/key.pem -cert-file ./certs/cert.pem test 'docker.test' '*.docker.test'`
@@ -69,8 +62,9 @@ Linux
 `sudo mv mkcert-v1.4.3-linux-amd64 /usr/local/bin/mkcert && chmod +x /usr/local/bin/mkcert`
 
 `mkcert -install`
-`mkdir certs`
 `mkcert -key-file ./certs/key.pem -cert-file ./certs/cert.pem test 'docker.test' '*.docker.test'`
+
+`mv .env.example .env`
 
 `docker-compose -f traefik.yaml up -d`
 
@@ -93,8 +87,9 @@ If it's `Restricted`, run `Set-ExecutionPolicy AllSigned`
 `choco install mkcert`
 
 `mkcert -install`
-`mkdir certs`
 `mkcert -key-file ./certs/key.pem -cert-file ./certs/cert.pem test 'docker.test' '*.docker.test'`
+
+`mv .env.example .env`
 
 `docker-compose -f traefik.yaml up -d`
 
