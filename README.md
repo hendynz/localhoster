@@ -4,6 +4,7 @@ macOS
 `docker network create web`
 
 `brew install mkcert`
+
 `brew install nss`
 
 `brew install dnsmasq`
@@ -25,6 +26,7 @@ In `/etc/resolver/docker.test`:
 `mv .env.example .env`
 
 `mkcert -install`
+
 `mkcert -key-file ./certs/key.pem -cert-file ./certs/cert.pem test 'docker.test' '*.docker.test'`
 
 `docker network create web`
@@ -38,11 +40,15 @@ Linux
 `docker network create web`
 
 `sudo systemctl disable systemd-resolved`
+
 `sudo systemctl stop systemd-resolved`
 
 `ls -lh /etc/resolv.conf`
+
 `sudo rm /etc/resolv.conf`
+
 `sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolv.conf'`
+
 `sudo bash -c 'echo "nameserver 1.1.1.1" >> /etc/resolv.conf'`
 
 `sudo vim /etc/NetworkManager/NetworkManager.conf`
@@ -52,16 +58,21 @@ Linux
 `sudo service network-manager restart`
 
 `sudo apt install dnsmasq`
+
 `sudo bash -c 'echo "address=/.test/127.0.0.1" >> /etc/dnsmasq.conf'`
+
 `sudo mkdir -v /etc/resolver && sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/test'`
+
 `sudo systemctl restart dnsmasq`
 
 `sudo apt install libnss3-tools -y`
 
 `wget https://github.com/FiloSottile/mkcert/releases/download/v1.4.3/mkcert-v1.4.3-linux-amd64`
+
 `sudo mv mkcert-v1.4.3-linux-amd64 /usr/local/bin/mkcert && chmod +x /usr/local/bin/mkcert`
 
 `mkcert -install`
+
 `mkcert -key-file ./certs/key.pem -cert-file ./certs/cert.pem test 'docker.test' '*.docker.test'`
 
 `mv .env.example .env`
@@ -87,6 +98,7 @@ If it's `Restricted`, run `Set-ExecutionPolicy AllSigned`
 `choco install mkcert`
 
 `mkcert -install`
+
 `mkcert -key-file ./certs/key.pem -cert-file ./certs/cert.pem test 'docker.test' '*.docker.test'`
 
 `mv .env.example .env`
