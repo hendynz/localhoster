@@ -46,6 +46,14 @@ services:
       - "traefik.http.routers.traefik.rule=Host(`${DOCKER_BASE_URL}`)"
       # Instructs Traefik that the current router is dedicated to HTTPS requests only.
       - "traefik.http.routers.traefik.tls=true"
+  mailcatcher:
+      image: schickling/mailcatcher
+      restart: always
+      networks:
+        - web
+      labels:
+        - "traefik.http.routers.${DOCKER_NAME}_mailcatcher.rule=Host(`mailcatcher.${DOCKER_BASE_URL}`)"
+        - "traefik.http.services.mailcatcher.loadbalancer.server.port=1080"
   portainer:
       image: portainer/portainer
       container_name: "${DOCKER_NAME}_portainer"

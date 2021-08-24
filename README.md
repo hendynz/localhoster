@@ -23,7 +23,7 @@ In `/etc/resolver/docker.test`:
 
 `sudo killall -HUP mDNSResponder`
 
-`mv .env.example .env`
+`cp .env.example .env`
 
 `mkcert -install`
 
@@ -31,7 +31,7 @@ In `/etc/resolver/docker.test`:
 
 `docker network create web`
 
-`docker-compose -f traefik.yaml up -d`
+`docker-compose up -d`
 
 
 Linux
@@ -75,9 +75,9 @@ Linux
 
 `mkcert -key-file ./certs/key.pem -cert-file ./certs/cert.pem test 'docker.test' '*.docker.test'`
 
-`mv .env.example .env`
+`cp .env.example .env`
 
-`docker-compose -f traefik.yaml up -d`
+`docker-compose up -d`
 
 
 Windows
@@ -101,9 +101,9 @@ If it's `Restricted`, run `Set-ExecutionPolicy AllSigned`
 
 `mkcert -key-file ./certs/key.pem -cert-file ./certs/cert.pem test 'docker.test' '*.docker.test'`
 
-`mv .env.example .env`
+`cp .env.example .env`
 
-`docker-compose -f traefik.yaml up -d`
+`docker-compose up -d`
 
 You can't use `dnsmasq` on Windows, so you'll need to add the entries to the hosts file manually.
 
