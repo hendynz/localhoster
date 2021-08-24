@@ -109,12 +109,13 @@ You can't use `dnsmasq` on Windows, so you'll need to add the entries to the hos
 
 1. Find Notepad in the Start Menu, right click -> Run as administrator
 2. Open `C:\Windows\System32\drivers\etc\hosts` (you will need to select the All Files file filter option).
-3. Add these three entries to the end of the file:
+3. Add these four entries to the end of the file:
 
 ```
     127.0.0.1 docker.test
     127.0.0.1 whoami.docker.test
     127.0.0.1 portainer.docker.test
+    127.0.0.1 mailcatcher.docker.test
 ```
 
 4. Save and quit
@@ -129,6 +130,7 @@ Visit these sites in your browser (only Chrome on Windows):
 -> https://docker.test/dashboard/
 -> https://whoami.docker.test/
 -> https://portainer.docker.test/#/home
+-> http://mailcatcher.docker.test/
 
 Note that these are HTTPS sites, unlike the insecure `localhost` you would get with Docker normally. Browsers restrict certain features (eg: geolocation) to HTTPS.
 
