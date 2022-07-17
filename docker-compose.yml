@@ -55,29 +55,29 @@ services:
         - "traefik.http.routers.${DOCKER_NAME}_mailcatcher.rule=Host(`mailcatcher.${DOCKER_BASE_URL}`)"
         - "traefik.http.services.mailcatcher.loadbalancer.server.port=1080"
   portainer:
-      image: portainer/portainer
+      image: portainer/portainer-ce:latest
       container_name: "${DOCKER_NAME}_portainer"
-      command: --no-auth -H unix:///var/run/docker.sock
+      command: -H unix:///var/run/docker.sock
+      restart: always
       networks:
         - web
       volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+        - /var/run/docker.sock:/var/run/docker.sock
+        - portainer_data:/data
       labels:
-        # Enable Portainer handler entrypoint on http.
-        - "traefik.http.routers.${DOCKER_NAME}_portainer-http.entrypoints=web"
-        # Define Portainer handler http host.
-        - "traefik.http.routers.${DOCKER_NAME}_portainer-http.rule=Host(`portainer.${DOCKER_BASE_URL}`)"
-        # Define http middleware and redirection to https.
-        - "traefik.http.routers.${DOCKER_NAME}_portainer-http.middlewares=${DOCKER_NAME}_portainer-https"
-        - "traefik.http.middlewares.${DOCKER_NAME}_portainer-https.redirectscheme.scheme=https"
-        # Enable Portainer handler entrypoint on https.
-        - "traefik.http.routers.${DOCKER_NAME}_portainer.entrypoints=websecure"
-        # Define Portainer handler host.
+        # Frontend
+        - "traefik.enable=true"
         - "traefik.http.routers.${DOCKER_NAME}_portainer.rule=Host(`portainer.${DOCKER_BASE_URL}`)"
-        # Instructs Traefik that the current router is dedicated to HTTPS requests only.
-        - "traefik.http.routers.${DOCKER_NAME}_portainer.tls=true"
-        # Define on which network Traefik is operating.
-        - "traefik.docker.network=web"
+        - "traefik.http.routers.${DOCKER_NAME}_portainer.entrypoints=websecure"
+        - "traefik.http.services.${DOCKER_NAME}_portainer.loadbalancer.server.port=9000"
+        - "traefik.http.routers.${DOCKER_NAME}_portainer.service=${DOCKER_NAME}_portainer"
+        - "traefik.http.routers.${DOCKER_NAME}_portainer.tls.certresolver=leresolver"
+        # Edge
+        - "traefik.http.routers.${DOCKER_NAME}_edge.rule=Host(`edge.${DOCKER_BASE_URL}`)"
+        - "traefik.http.routers.${DOCKER_NAME}_edge.entrypoints=websecure"
+        - "traefik.http.services.${DOCKER_NAME}_edge.loadbalancer.server.port=8000"
+        - "traefik.http.routers.${DOCKER_NAME}_edge.service=${DOCKER_NAME}_edge"
+        - "traefik.http.routers.${DOCKER_NAME}_edge.tls.certresolver=leresolver"
   whoami:
     image: containous/whoami
     container_name: "${DOCKER_NAME}_whoami"
@@ -103,3 +103,6 @@ services:
 networks:
   web:
     external: true
+
+volumes:
+  portainer_data:
