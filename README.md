@@ -31,11 +31,11 @@ In `/etc/resolver/docker.test`:
 
 `docker network create web`
 
-`docker-compose up -d`
+`docker compose up -d`
 
 
-Linux
-=====
+Linux (Ubuntu 24.04)
+====================
 
 `docker network create web`
 
@@ -50,12 +50,6 @@ Linux
 `sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolv.conf'`
 
 `sudo bash -c 'echo "nameserver 1.1.1.1" >> /etc/resolv.conf'`
-
-`sudo vim /etc/NetworkManager/NetworkManager.conf`
-    In section `[main]`:
-
-    `dns=none`
-`sudo service network-manager restart`
 
 `sudo apt install dnsmasq`
 
@@ -77,7 +71,7 @@ Linux
 
 `cp .env.example .env`
 
-`docker-compose up -d`
+`docker compose up -d`
 
 
 Windows
@@ -103,7 +97,7 @@ If it's `Restricted`, run `Set-ExecutionPolicy AllSigned`
 
 `cp .env.example .env`
 
-`docker-compose up -d`
+`docker compose up -d`
 
 You can't use `dnsmasq` on Windows, so you'll need to add the entries to the hosts file manually.
 
